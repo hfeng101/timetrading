@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/activity_bg"
+    android:orientation="vertical" >
+
+    <com.gamelife.timetrading.view.TitleView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <com.gamelife.timetrading.library.PullToRefreshListView
+        android:id="@+id/list_market"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"    
+        android:cacheColorHint="#00000000"
+        android:divider="#19000000"
+        android:dividerHeight="4dp"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false" 
+        android:smoothScrollbar="true" /> 
+
+</LinearLayout>

@@ -1,4 +1,4 @@
--timetrading
+timetrading
 ============
 
-APP to make our time more valuable
+An APP to make our time more valuable
