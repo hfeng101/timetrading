@@ -99,14 +99,14 @@ public class TitleTradingView extends FrameLayout implements View.OnClickListene
 		inflater.inflate(R.layout.title_trading_view, this, true);
 
 		backBtn = (Button) findViewById(R.id.back);
-		backBtn.setVisibility(View.INVISIBLE);
+		backBtn.setVisibility(View.VISIBLE);
 		backBtn.setOnClickListener(this);
 		moreBtn = (Button) findViewById(R.id.more);
-		moreBtn.setVisibility(View.INVISIBLE);
+		moreBtn.setVisibility(View.VISIBLE);
 		moreBtn.setOnClickListener(this);
 		
 		mTitle = (TextView) findViewById(R.id.login_text);
-		mTitle.setVisibility(View.INVISIBLE);
+		mTitle.setVisibility(View.VISIBLE);
 	}
 	
 	public void setTitle(String text) {

@@ -1,7 +1,31 @@
 package com.gamelife.timetrading.fragment;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
 import com.gamelife.timetrading.R;
 import com.gamelife.timetrading.R.string;
+import com.gamelife.timetrading.view.LoginView;
+import com.gamelife.timetrading.view.LoginView.OnLoginButtonClickListener;
+import com.gamelife.timetrading.view.LoginView.OnSignButtonClickListener;
+import com.gamelife.timetrading.view.TitleMarketView;
+import com.gamelife.timetrading.view.TitleMarketView.OnBackButtonClickListener;
+import com.gamelife.timetrading.view.TitleMarketView.OnBuyButtonClickListener;
+import com.gamelife.timetrading.view.TitleMarketView.OnMoreButtonClickListener;
+import com.gamelife.timetrading.view.TitleMarketView.OnSellButtonClickListener;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -21,6 +45,11 @@ import android.widget.TextView;
  * 
  */
 public class TradingFragment extends Fragment {
+	private final String TAG = "TradingFragment";
+	private View mParent;
+	private Activity mActivity;
+	private LoginView mTitle;
+	
 	// TODO: Rename parameter arguments, choose names that match
 	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 	private static final String ARG_PARAM1 = "param1";
@@ -65,6 +94,71 @@ public class TradingFragment extends Fragment {
 		}
 	}
 
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		mActivity = getActivity();
+		mParent = getView();
+
+		mTitle = (LoginView) mParent.findViewById(R.id.title_market);
+		//mTitle.set
+/*		//登陆
+		mTitle.setLoginButton(R.string.login, new OnLoginButtonClickListener(){
+
+			@Override   
+	      public void onClick(View v) {   
+	       System.out.println("Login Button clicked!");   
+	       //服务器登录认证地址
+	       String httpUrl = "http://10.0.2.2:8089/Gossip/LoginServlet";    
+	       System.out.println(httpUrl);   
+	       HttpPost request = new HttpPost(httpUrl);     
+	       HttpClient httpClient = new DefaultHttpClient();     
+	       //传递参数    
+	       List<NameValuePair> params = new ArrayList<NameValuePair>();     
+	      // params.add(new BasicNameValuePair("username", mUserName.getText().toString()));    
+	      // params.add(new BasicNameValuePair("password", mPasswd.getText().toString()));                                  
+	       HttpResponse response;   
+	          try {   
+	              HttpEntity entity = new UrlEncodedFormEntity(params, "UTF-8");     
+	              request.setEntity(entity);     
+	              response = httpClient.execute(request);   
+	             
+	           //如果返回状态为200，获得返回的结果    
+	           if(response.getStatusLine().getStatusCode()==HttpStatus.SC_OK){     
+	               String str = EntityUtils.toString(response.getEntity());     
+	               System.out.println("response:"+str);   
+	               if(str.trim().equals("success")){   
+	                   //用户登录成功    ,界面跳转
+	                   System.out.println("登录成功！");   
+	          //         Intent intent = new Intent(GossipActivity.this,GossiplistActivity.class);   
+	          //         startActivity(intent);   
+	               }   
+	               else{   
+	                   //用户登录失败    
+	                   System.out.println("登录失败！");   
+	               }   
+	           }else{     
+	               System.out.println("连接失败！");   
+	           }     
+	          } catch (ClientProtocolException e) {   
+	              // TODO Auto-generated catch block    
+	              e.printStackTrace();   
+	          } catch (IOException e) {   
+	              // TODO Auto-generated catch block    
+	                  e.printStackTrace();   
+	              }     
+	    }});  
+		
+		//注册
+		mTitle.setSignButton(R.string.sign, new OnSignButtonClickListener() {
+
+			@Override
+			public void onClick(View button) {
+				
+			}
+		});
+*/
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

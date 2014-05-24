@@ -34,6 +34,7 @@ import com.gamelife.timetrading.library.extras.SoundPullEventListener;
 
 
 
+
 import android.app.Activity;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -67,6 +68,8 @@ public class MarketFragment extends Fragment {
 	private PullToRefreshListView mPullRefreshListView;
 	private MarketListViewAdapter mAdapter;
 	//private ArrayAdapter<Map<String, Object>> mAdapter;
+	
+	private List<Map<String, Object>> mDataMapList = new ArrayList<Map<String, Object>>();
 
 	private String[] mStrings = { "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam", "Abondance", "Ackawi",
 			"Acorn", "Adelost", "Affidelice au Chablis", "Afuega'l Pitu", "Airag", "Airedale", "Aisy Cendre",
@@ -204,14 +207,11 @@ public class MarketFragment extends Fragment {
 		// Need to use the Actual ListView when registering for Context Menu
 		registerForContextMenu(actualListView);
 
-		//mListItems = new LinkedList<String>();
-		//mListItems.addAll(Arrays.asList(mStrings));
-
 		Log.e(TAG, "init adapter!!");
-		mAdapter = new MarketListViewAdapter(mActivity, getData());
-		//mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mListItems);
-		//mAdapter = new ArrayAdapter<Map<String, Object>>(this, android.R.layout.simple_list_item_1, getData());
-
+		List<Map<String, Object>> mDataList = new ArrayList<Map<String, Object>>();
+		mDataList = getData();
+		mAdapter = new MarketListViewAdapter(mActivity, mDataList);
+		
 		// Add Sound Event Listener
 		SoundPullEventListener<ListView> soundListener = new SoundPullEventListener<ListView>(mActivity);
 		soundListener.addSoundEvent(State.PULL_TO_REFRESH, R.raw.pull_event);
@@ -221,6 +221,7 @@ public class MarketFragment extends Fragment {
 
 		// You can also just use setListAdapter(mAdapter) or
 		//mPullRefreshListView.setAdapter(mAdapter);
+
 		Log.e(TAG, "before set adapter!!");
 		actualListView.setAdapter(mAdapter);
 		
@@ -236,51 +237,53 @@ public class MarketFragment extends Fragment {
 	}
 	
 	private List<Map<String, Object>> getData() {
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("img", R.drawable.ic_launcher);
 		map.put("userid", "G1");
 		map.put("content", "google 1");
 
-		list.add(map);
+		mDataMapList.add(map);
 
 		map = new HashMap<String, Object>();
 		map.put("img", R.drawable.ic_launcher);
 		map.put("userid", "G2");
 		map.put("content", "google 2");
-		list.add(map);
+		mDataMapList.add(map);
 
 		map = new HashMap<String, Object>();
 		map.put("img", R.drawable.ic_launcher);
 		map.put("userid", "G3");
 		map.put("content", "google 3");
-		list.add(map);
+		mDataMapList.add(map);
 		
-		return list;
+		return mDataMapList;
 	}
 	
 	
-	private class GetDataTask extends AsyncTask<Void, Void, String[]> {
+	private class GetDataTask extends AsyncTask<Void, Void, List<Map<String, Object>>> {
 
 		@Override
-		protected String[] doInBackground(Void... params) {
+		protected List<Map<String, Object>> doInBackground(Void... params) {
 			// Simulates a background job.
 			try {
 				Thread.sleep(4000);
 			} catch (InterruptedException e) {
 			}
-			return mStrings;
+
+			Log.e(TAG,"[doInBackground]: return refresh Data!");
+			return getData();
 		}
 
 		@Override
-		protected void onPostExecute(String[] result) {
-			mListItems.addFirst("Added after refresh...");
+		protected void onPostExecute(List<Map<String, Object>> result) {
+			//mDataMapList = getRefreshData();
+			//mAdapter.UpdateData(mDataMapList);
 			mAdapter.notifyDataSetChanged();
 
 			// Call onRefreshComplete when the list has been refreshed.
 			mPullRefreshListView.onRefreshComplete();
-
+			Log.e(TAG,"[onPostExecute]: Execute refresh!");
 			super.onPostExecute(result);
 		}
 	}

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class MarketListViewAdapter extends BaseAdapter{
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 3;
+			return  mData.size();
 		}
 
 		@Override
@@ -45,14 +46,19 @@ public class MarketListViewAdapter extends BaseAdapter{
 			// TODO Auto-generated method stub
 			return 0;
 		}
-
+		
+		public void UpdateData(List<Map<String, Object>> data)
+		{
+			Log.e(TAG, "[UpdateData]: Updata Data Info!!!" + mData.size());
+			this.mData = data;
+		}
 		
 		public final class ViewHolder{
-			public ImageView headImage;
+			public ImageButton headImage;
 			public TextView userID;
 			public TextView content;
-			//public Button comment;
-			//public Button trade;
+			public Button comment;
+			public Button trade;
 		}
 		
 		@Override
@@ -63,11 +69,11 @@ public class MarketListViewAdapter extends BaseAdapter{
 				
 				convertView = mInflater.inflate(R.layout.market_content, null);
 				Log.e(TAG, "[getView]: before findViewById!!!");
-				holder.headImage = (ImageView)convertView.findViewById(R.id.head_image);
+				holder.headImage = (ImageButton)convertView.findViewById(R.id.head_image);
 				holder.userID = (TextView)convertView.findViewById(R.id.user_id);
 				holder.content = (TextView)convertView.findViewById(R.id.content);
-				//holder.comment = (Button)convertView.findViewById(R.id.comment);
-				//holder.trade = (Button)convertView.findViewById(R.id.trade);
+				holder.comment = (Button)convertView.findViewById(R.id.comment);
+				holder.trade = (Button)convertView.findViewById(R.id.trade);
 				convertView.setTag(holder);
 			}
 			else
@@ -77,10 +83,19 @@ public class MarketListViewAdapter extends BaseAdapter{
 			
 			Log.e(TAG, "before set adapter!!!");
 			holder.headImage.setBackgroundResource((Integer)mData.get(position).get("img"));
+			Log.e(TAG, "[UpdateData]: userID is " + mData.get(position).get("userid"));
 			holder.userID.setText((String)mData.get(position).get("userid"));
+			Log.e(TAG, "[UpdateData]: content is " + mData.get(position).get("content"));
 			holder.content.setText((String)mData.get(position).get("content"));
 			
-			/*
+			holder.headImage.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+									
+				}
+			});
+			
 			holder.comment.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
@@ -96,47 +111,7 @@ public class MarketListViewAdapter extends BaseAdapter{
 									
 				}
 			});
-			*/
-			
-
-			return convertView;
-		}
-		
-		/*
-		public View getView(int position, View convertView, ViewGroup parent) {
-			
-			ViewHolder holder = null;
-			if (convertView == null) {
-				
-				holder=new ViewHolder();  
-				
-				convertView = mInflater.inflate(R.layout.vlist2, null);
-				holder.img = (ImageView)convertView.findViewById(R.id.img);
-				holder.title = (TextView)convertView.findViewById(R.id.title);
-				holder.info = (TextView)convertView.findViewById(R.id.info);
-				holder.viewBtn = (Button)convertView.findViewById(R.id.view_btn);
-				convertView.setTag(holder);
-				
-			}else {
-				
-				holder = (ViewHolder)convertView.getTag();
-			}
-			
-			
-			holder.img.setBackgroundResource((Integer)mData.get(position).get("img"));
-			holder.title.setText((String)mData.get(position).get("title"));
-			holder.info.setText((String)mData.get(position).get("info"));
-			
-			holder.viewBtn.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					showInfo();					
-				}
-			});
-			
 			
 			return convertView;
 		}
-		*/
 }

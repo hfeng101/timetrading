@@ -78,7 +78,7 @@ public class HelpActivity extends ListActivity {
 		setContentView(R.layout.activity_help);
 
 		Log.e(TAG, "Before mPullRefreshListView");
-		mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.list_market);
+		mPullRefreshListView = (PullToRefreshListView)findViewById(R.id.list_market);
 		Log.e(TAG, "After mPullRefreshListView");
 
 
